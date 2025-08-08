@@ -12,19 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- صورة الوصفة -->
+
         <ImageView
             android:id="@+id/imageRecipe"
             android:layout_width="0dp"
             android:layout_height="300dp"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/recipe_image"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:src="@drawable/image_food" />
 
-        <!-- زر تشغيل الفيديو -->
+
         <ImageButton
             android:id="@+id/btnPlayVideo"
             android:layout_width="64dp"
@@ -38,7 +37,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp" />
 
-        <!-- زر المفضلة -->
+
         <ImageButton
             android:id="@+id/btnFavorite"
             android:layout_width="48dp"
@@ -49,7 +48,7 @@
             app:layout_constraintEnd_toEndOf="@id/imageRecipe"
             app:srcCompat="@drawable/ic_favorite" />
 
-        <!-- الكارد فوق الصورة -->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardRecipe"
             android:layout_width="0dp"
@@ -69,7 +68,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <!-- عنوان الوصفة -->
+
                 <TextView
                     android:id="@+id/tvRecipeTitle"
                     android:layout_width="match_parent"
@@ -79,7 +78,7 @@
                     android:textColor="@android:color/black"
                     tools:text="Easy Fresh Salad Recipe with Grilled Cheese" />
 
-                <!-- عدد المكونات -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +86,7 @@
                     android:textColor="@android:color/darker_gray"
                     tools:text="You have all 10 ingredients" />
 
-                <!-- تقييم ووقت -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -95,7 +94,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginTop="8dp">
 
-                    <!-- نجوم التقييم -->
+
                     <RatingBar
                         android:id="@+id/ratingBar"
                         android:layout_width="wrap_content"
@@ -107,7 +106,7 @@
                         android:layout_marginEnd="8dp"
                         style="?android:attr/ratingBarStyleSmall" />
 
-                    <!-- وقت التحضير -->
+
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
@@ -203,7 +202,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="• Wash the lettuce thoroughly.\n• Slice the grilled cheese into small cubes.\n• Cut the cherry tomatoes in halves.\n• Mix all ingredients in a large bowl.\n• Add dressing and serve fresh." />
 
-        <!-- More/Less Button -->
+
         <TextView
             android:id="@+id/btnToggleInstructions"
             android:layout_width="wrap_content"

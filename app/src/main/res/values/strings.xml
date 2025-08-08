@@ -15,4 +15,6 @@
     <string name="please_enter_your_account_here">Please enter your account here</string>
     <string name="login">Login</string>
     <string name="don_t_have_any_account_sign_up">Don\'t have any account?Sign up</string>
+    <string name="ingredients">ingredients</string>
+    <string name="instructions">instructions</string>
 </resources>
