@@ -71,7 +71,8 @@ dependencies {
 
     // To use Kotlin annotation processing tool (kapt)
     //noinspection KaptUsageInsteadOfKsp
-    kapt("androidx.room:room-compiler:2.7.2")
+
+   kapt("androidx.room:room-compiler:2.7.2")
 
 
     // optional - Kotlin Extensions and Coroutines support for Room
