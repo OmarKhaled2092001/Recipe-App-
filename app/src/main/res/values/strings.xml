@@ -19,4 +19,6 @@
     <string name="instructions">instructions</string>
     <string name="search_for_recipes">Search for recipes...</string>
     <string name="you_have_no_favorite_recipes_yet">You have no favorite recipes yet.</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
+    <string name="app_slogen">All Your Favorite Recipes in One Place.</string>
 </resources>
