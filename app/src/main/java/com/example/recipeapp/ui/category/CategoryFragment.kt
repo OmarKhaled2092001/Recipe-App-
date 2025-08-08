@@ -9,10 +9,10 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.R
-import com.example.recipeapp.data.adapters.RecipeAdapter
+import com.example.recipeapp.adapters.RecipeAdapter
 import com.example.recipeapp.data.local.AppDatabase
 import com.example.recipeapp.data.repository.MealRepository
-import com.example.recipeapp.data.util.Resource
+import com.example.recipeapp.util.Resource
 import com.example.recipeapp.databinding.FragmentCategoryBinding
 import com.example.recipeapp.ui.viewmodels.HomeViewModel
 import com.example.recipeapp.ui.viewmodels.ViewModelFactory
