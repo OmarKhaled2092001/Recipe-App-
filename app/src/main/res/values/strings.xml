@@ -17,4 +17,6 @@
     <string name="don_t_have_any_account_sign_up">Don\'t have any account?Sign up</string>
     <string name="ingredients">ingredients</string>
     <string name="instructions">instructions</string>
+    <string name="search_for_recipes">Search for recipes...</string>
+    <string name="you_have_no_favorite_recipes_yet">You have no favorite recipes yet.</string>
 </resources>
