@@ -17,4 +17,11 @@
     <string name="you_have_no_favorite_recipes_yet">You have no favorite recipes yet.</string>
     <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
     <string name="app_slogen">All Your Favorite Recipes in One Place.</string>
+    <string name="find_best_recipes_nfor_cooking">find_best_recipes_nfor_cooking</string>
+    <string name="categories">categories</string>
+    <string name="favorites">Favorites</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="find_best_recipes_for_cooking">Find Best Recipes For cooking</string>
+    <string name="beef">beef</string>
 </resources>

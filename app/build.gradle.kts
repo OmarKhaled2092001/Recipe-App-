@@ -7,11 +7,12 @@ plugins {
 
 android {
     namespace = "com.example.recipeapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.recipeapp"
         minSdk = 27
+        //noinspection OldTargetApi
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -45,7 +46,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -60,37 +60,36 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-
     // Navigation Component
-    implementation("androidx.navigation:navigation-fragment:2.9.3")
-    implementation("androidx.navigation:navigation-ui:2.9.3")
+    implementation(libs.androidx.navigation.fragment)
+    implementation(libs.androidx.navigation.ui)
 
     // Room
-    implementation("androidx.room:room-runtime:2.7.2")
-    annotationProcessor("androidx.room:room-compiler:2.7.2")
+    implementation(libs.androidx.room.runtime)
+    annotationProcessor(libs.androidx.room.compiler)
 
     // To use Kotlin annotation processing tool (kapt)
     //noinspection KaptUsageInsteadOfKsp
 
-   kapt("androidx.room:room-compiler:2.7.2")
+   kapt(libs.androidx.room.compiler)
 
 
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.7.2")
+    implementation(libs.androidx.room.ktx)
 
 
     // Retrofit (API Calls)
-    implementation("com.squareup.retrofit2:retrofit:3.0.0")
-    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
 
     // Glide (for loading images from URL)
-    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation(libs.glide)
 
 
     // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.2")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.9.2")
-    kapt("androidx.lifecycle:lifecycle-compiler:2.9.2")
+    implementation(libs.androidx.lifecycle.viewmodel.ktx.v292)
+    implementation(libs.androidx.lifecycle.livedata.ktx.v292)
+    kapt(libs.androidx.lifecycle.compiler)
 
 }
