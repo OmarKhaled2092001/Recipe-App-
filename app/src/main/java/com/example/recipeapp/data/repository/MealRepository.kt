@@ -18,4 +18,7 @@ class MealRepository(private val db: AppDatabase) {
     suspend fun registerUser(user: User) = db.userDao().registerUser(user)
     suspend fun getUserByEmail(email: String): User? = db.userDao().getUserByEmail(email)
 
+
+
+    suspend fun getCategories() = RetrofitInstance.api.getCategories()
 }
