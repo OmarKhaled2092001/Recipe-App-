@@ -1,8 +1,11 @@
 package com.example.recipeapp.data.models
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "favorite_meals")
 data class Meal(
     @PrimaryKey
@@ -51,4 +54,4 @@ data class Meal(
     val strMeasure18: String?,
     val strMeasure19: String?,
     val strMeasure20: String?,
-)
+) : Parcelable

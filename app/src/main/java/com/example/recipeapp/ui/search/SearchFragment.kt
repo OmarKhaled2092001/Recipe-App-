@@ -9,6 +9,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.adapters.RecipeAdapter
 import com.example.recipeapp.data.local.AppDatabase
@@ -65,10 +66,21 @@ class SearchFragment : Fragment() {
         }
 
         searchAdapter.setOnItemClickListener { meal ->
-            Toast.makeText(context, "Clicked on: ${meal.strMeal}", Toast.LENGTH_SHORT).show()
-            // navigate to RecipeDetailsFragment
+            val action = SearchFragmentDirections.actionSearchFragmentToRecipeDetailFragment(meal)
+            findNavController().navigate(action)
+        }
+
+        searchAdapter.setOnAddFavoriteClickListener { meal ->
+            viewModel.upsertMeal(meal)
+            Toast.makeText(context, "${meal.strMeal} saved", Toast.LENGTH_SHORT).show()
+        }
+
+        searchAdapter.setOnDeleteFavoriteClickListener { meal ->
+            viewModel.deleteMeal(meal)
+            Toast.makeText(context, "${meal.strMeal} removed", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun setupRecyclerView() {
         searchAdapter = RecipeAdapter()
@@ -86,8 +98,8 @@ class SearchFragment : Fragment() {
                 }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
-                    resource.data?.let { response ->
-                        searchAdapter.differ.submitList(response.meals)
+                    resource.data?.let { mealsWithStatusList ->
+                        searchAdapter.differ.submitList(mealsWithStatusList)
                     }
                 }
                 is Resource.Error -> {
