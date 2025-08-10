@@ -50,7 +50,8 @@
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
-            android:name="meal"
-            app:argType="com.example.recipeapp.data.models.Meal" />
+            android:name="mealId"
+            app:argType="string" />
     </fragment>
+
 </navigation>

@@ -58,8 +58,8 @@ class CategoryFragment : Fragment() {
             homeViewModel.getMealsByCategory(it)
         }
 
-        recipeAdapter.setOnItemClickListener { meal ->
-            val action = CategoryFragmentDirections.actionCategoryFragmentToRecipeDetailFragment(meal)
+        recipeAdapter.setOnItemClickListener { mealId ->
+            val action = CategoryFragmentDirections.actionCategoryFragmentToRecipeDetailFragment(mealId)
             findNavController().navigate(action)
         }
     }

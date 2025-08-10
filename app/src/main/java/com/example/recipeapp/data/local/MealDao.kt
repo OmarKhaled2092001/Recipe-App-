@@ -18,4 +18,7 @@ interface MealDao {
 
     @Query("SELECT * FROM favorite_meals")
     fun getAllFavoriteMeals(): Flow<List<Meal>>
+
+    @Query("SELECT * FROM favorite_meals WHERE idMeal = :id LIMIT 1")
+    fun getMealById(id: String): Flow<Meal?>
 }
