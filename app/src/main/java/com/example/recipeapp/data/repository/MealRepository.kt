@@ -21,4 +21,8 @@ class MealRepository(private val db: AppDatabase) {
 
 
     suspend fun getCategories() = RetrofitInstance.api.getCategories()
+
+    suspend fun getMealsByCategory(categoryName: String) = RetrofitInstance.api.getMealsByCategory(categoryName)
+
+
 }

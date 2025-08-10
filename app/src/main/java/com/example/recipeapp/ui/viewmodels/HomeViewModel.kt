@@ -14,12 +14,11 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: MealRepository) : ViewModel() {
 
-
     val categories: MutableLiveData<Resource<CategoriesResponse>> = MutableLiveData()
     val searchedMeals: MutableLiveData<Resource<List<MealWithFavoriteStatus>>> = MutableLiveData()
+    val mealsByCategory: MutableLiveData<Resource<List<MealWithFavoriteStatus>>> = MutableLiveData()
 
     private var lastSearchQuery: String? = null
-
 
     fun getCategories() {
         viewModelScope.launch {
@@ -32,7 +31,6 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
             }
         }
     }
-
 
     fun searchMeals(searchQuery: String) {
         lastSearchQuery = searchQuery
@@ -52,6 +50,26 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
                 searchedMeals.postValue(Resource.Success(mealsWithStatus))
             } catch (e: Exception) {
                 searchedMeals.postValue(Resource.Error(e.message ?: "An unknown error occurred"))
+            }
+        }
+    }
+
+    fun getMealsByCategory(categoryName: String) {
+        viewModelScope.launch {
+            mealsByCategory.postValue(Resource.Loading())
+            try {
+                val favoriteMeals = repository.getFavoriteMeals().first()
+                val favoriteIds = favoriteMeals.map { it.idMeal }.toSet()
+                val response = repository.getMealsByCategory(categoryName)
+                val mealsWithStatus = response.meals.map { mealFromApi ->
+                    MealWithFavoriteStatus(
+                        meal = mealFromApi,
+                        isFavorite = favoriteIds.contains(mealFromApi.idMeal)
+                    )
+                }
+                mealsByCategory.postValue(Resource.Success(mealsWithStatus))
+            } catch (e: Exception) {
+                mealsByCategory.postValue(Resource.Error(e.message ?: "An unknown error occurred"))
             }
         }
     }

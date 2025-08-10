@@ -11,4 +11,5 @@ object RetrofitInstance {
             .build()
             .create(MealApi::class.java)
     }
+
 }
