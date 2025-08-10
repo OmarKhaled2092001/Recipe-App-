@@ -60,8 +60,9 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
             }
         }
 
+        // هنا نرسل فقط idMeal كـ String
         holder.itemView.setOnClickListener {
-            onItemClickListener?.let { it(meal) }
+            onItemClickListener?.let { it(meal.idMeal) }
         }
 
         holder.binding.shareFab.setOnClickListener {
@@ -73,8 +74,8 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
         }
     }
 
-    private var onItemClickListener: ((Meal) -> Unit)? = null
-    fun setOnItemClickListener(listener: (Meal) -> Unit) {
+    private var onItemClickListener: ((String) -> Unit)? = null
+    fun setOnItemClickListener(listener: (String) -> Unit) {
         onItemClickListener = listener
     }
 

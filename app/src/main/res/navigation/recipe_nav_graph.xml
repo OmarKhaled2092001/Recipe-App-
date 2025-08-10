@@ -12,6 +12,7 @@
         android:id="@+id/action_homeFragment_to_categoryFragment"
         app:destination="@id/categoryFragment" />
 </fragment>
+
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.recipeapp.ui.category.CategoryFragment"
@@ -24,6 +25,7 @@
             android:id="@+id/action_categoryFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.recipeapp.ui.favorite.FavoriteFragment"
@@ -44,11 +46,12 @@
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
-        android:name="com.example.recipeapp.ui.detail.RecipeDetailFragment"
+        android:name="com.example.recipeapp.ui.recipedetail.RecipeDetailFragment"
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipe_detail" >
         <argument
-            android:name="meal"
-            app:argType="com.example.recipeapp.data.models.Meal" />
+            android:name="mealId"
+            app:argType="string" />
     </fragment>
+
 </navigation>
