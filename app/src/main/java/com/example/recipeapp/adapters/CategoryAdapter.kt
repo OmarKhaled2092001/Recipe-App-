@@ -36,6 +36,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
         )
     }
 
+    
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
