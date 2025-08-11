@@ -6,29 +6,52 @@
     app:startDestination="@id/homeFragment"> <fragment
     android:id="@+id/homeFragment"
     android:name="com.example.recipeapp.ui.home.HomeFragment"
-    android:label="fragment_home"
+    android:label="Home"
     tools:layout="@layout/fragment_home" >
     <action
         android:id="@+id/action_homeFragment_to_categoryFragment"
         app:destination="@id/categoryFragment" />
 </fragment>
+
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.recipeapp.ui.category.CategoryFragment"
-        android:label="fragment_category"
+        android:label="Category"
         tools:layout="@layout/fragment_category" >
         <argument
             android:name="categoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_categoryFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/favoriteFragment"
         android:name="com.example.recipeapp.ui.favorite.FavoriteFragment"
-        android:label="fragment_favorite"
-        tools:layout="@layout/fragment_favorite" />
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" >
+        <action
+            android:id="@+id/action_favoriteFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.recipeapp.ui.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        android:label="Search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="com.example.recipeapp.ui.recipedetail.RecipeDetailFragment"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_detail" >
+        <argument
+            android:name="mealId"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

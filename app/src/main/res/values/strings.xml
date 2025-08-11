@@ -26,4 +26,6 @@
     <string name="beef">beef</string>
     <string name="about_us">About Us</string>
     <string name="sign_out">Sign Out</string>
+    <string name="less">less</string>
+    <string name="more">more</string>
 </resources>

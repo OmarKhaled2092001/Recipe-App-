@@ -1,5 +1,7 @@
 package com.example.recipeapp.adapters
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -7,18 +9,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.recipeapp.data.models.Meal
+import com.example.recipeapp.data.models.MealWithFavoriteStatus
 import com.example.recipeapp.databinding.RecipeItemBinding
 
 class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
 
     inner class RecipeViewHolder(val binding: RecipeItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    private val diffCallback = object : DiffUtil.ItemCallback<Meal>() {
-        override fun areItemsTheSame(oldItem: Meal, newItem: Meal): Boolean {
-            return oldItem.idMeal == newItem.idMeal
+    private val diffCallback = object : DiffUtil.ItemCallback<MealWithFavoriteStatus>() {
+        override fun areItemsTheSame(oldItem: MealWithFavoriteStatus, newItem: MealWithFavoriteStatus): Boolean {
+            return oldItem.meal.idMeal == newItem.meal.idMeal
         }
 
-        override fun areContentsTheSame(oldItem: Meal, newItem: Meal): Boolean {
+        override fun areContentsTheSame(oldItem: MealWithFavoriteStatus, newItem: MealWithFavoriteStatus): Boolean {
             return oldItem == newItem
         }
     }
@@ -40,23 +43,49 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        val meal = differ.currentList[position]
+        val mealWithStatus = differ.currentList[position]
+        val meal = mealWithStatus.meal
+
         holder.binding.apply {
-            articleText.text = meal.strMeal
+            mealName.text = meal.strMeal
 
             Glide.with(holder.itemView)
                 .load(meal.strMealThumb)
-                .into(articleImage)
+                .into(mealImage)
+
+            if (mealWithStatus.isFavorite) {
+                shareFab.imageTintList = ColorStateList.valueOf(Color.RED)
+            } else {
+                shareFab.imageTintList = ColorStateList.valueOf(Color.GRAY)
+            }
         }
 
+        // هنا نرسل فقط idMeal كـ String
         holder.itemView.setOnClickListener {
-            onItemClickListener?.let { it(meal) }
+            onItemClickListener?.let { it(meal.idMeal) }
+        }
+
+        holder.binding.shareFab.setOnClickListener {
+            if (mealWithStatus.isFavorite) {
+                onDeleteFavoriteClickListener?.let { it(meal) }
+            } else {
+                onAddFavoriteClickListener?.let { it(meal) }
+            }
         }
     }
 
-    private var onItemClickListener: ((Meal) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (Meal) -> Unit) {
+    private var onItemClickListener: ((String) -> Unit)? = null
+    fun setOnItemClickListener(listener: (String) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onAddFavoriteClickListener: ((Meal) -> Unit)? = null
+    fun setOnAddFavoriteClickListener(listener: (Meal) -> Unit) {
+        onAddFavoriteClickListener = listener
+    }
+
+    private var onDeleteFavoriteClickListener: ((Meal) -> Unit)? = null
+    fun setOnDeleteFavoriteClickListener(listener: (Meal) -> Unit) {
+        onDeleteFavoriteClickListener = listener
     }
 }

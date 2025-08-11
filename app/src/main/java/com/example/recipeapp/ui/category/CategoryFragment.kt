@@ -1,30 +1,36 @@
 package com.example.recipeapp.ui.category
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.recipeapp.R
 import com.example.recipeapp.adapters.RecipeAdapter
 import com.example.recipeapp.data.local.AppDatabase
 import com.example.recipeapp.data.repository.MealRepository
-import com.example.recipeapp.util.Resource
 import com.example.recipeapp.databinding.FragmentCategoryBinding
 import com.example.recipeapp.ui.viewmodels.HomeViewModel
 import com.example.recipeapp.ui.viewmodels.ViewModelFactory
+import com.example.recipeapp.util.Resource
 
 class CategoryFragment : Fragment() {
 
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: HomeViewModel
-    private lateinit var recipesAdapter: RecipeAdapter
-//    private val args: CategoryFragmentArgs by navArgs()
+    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var recipeAdapter: RecipeAdapter
+
+    private var categoryName: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        categoryName = arguments?.getString("categoryName")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,7 +41,7 @@ class CategoryFragment : Fragment() {
         val database = AppDatabase.getInstance(requireContext())
         val repository = MealRepository(database)
         val factory = ViewModelFactory(repository)
-        viewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
 
         return binding.root
     }
@@ -43,52 +49,39 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val categoryName = args.categoryName
+        binding.tvCategoryTitle.text = categoryName ?: "Category"
 
         setupRecyclerView()
+        observeMeals()
 
-        observeCategoryMeals()
+        categoryName?.let {
+            homeViewModel.getMealsByCategory(it)
+        }
 
-//        binding.tvCategoryTitle.text = categoryName
-
-//        viewModel.searchMeals(categoryName)
-
-        recipesAdapter.setOnItemClickListener { meal ->
-            Toast.makeText(context, meal.strMeal, Toast.LENGTH_SHORT).show()
-            // navigate to RecipeDetailsFragment
+        recipeAdapter.setOnItemClickListener { mealId ->
+            val action = CategoryFragmentDirections.actionCategoryFragmentToRecipeDetailFragment(mealId)
+            findNavController().navigate(action)
         }
     }
 
     private fun setupRecyclerView() {
-        recipesAdapter = RecipeAdapter()
+        recipeAdapter = RecipeAdapter()
         binding.rvCategoryRecipes.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = recipesAdapter
+            adapter = recipeAdapter
         }
     }
 
-    private fun observeCategoryMeals() {
-        viewModel.searchedMeals.observe(viewLifecycleOwner) { resource ->
-            when (resource) {
-                is Resource.Loading -> {
-                    binding.categoryProgressBar.visibility = View.VISIBLE
-                    binding.rvCategoryRecipes.visibility = View.GONE
-                }
+    private fun observeMeals() {
+        homeViewModel.mealsByCategory.observe(viewLifecycleOwner) { resource ->
+            when(resource) {
+                is Resource.Loading -> binding.categoryProgressBar.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.categoryProgressBar.visibility = View.GONE
-                    binding.rvCategoryRecipes.visibility = View.VISIBLE
-                    resource.data?.let { response ->
-                        if (response.meals != null) {
-                            recipesAdapter.differ.submitList(response.meals)
-                        } else {
-                            recipesAdapter.differ.submitList(emptyList())
-//                            Toast.makeText(context, "No recipes found for ${args.categoryName}", Toast.LENGTH_LONG).show()
-                        }
-                    }
+                    resource.data?.let { recipeAdapter.differ.submitList(it) }
                 }
                 is Resource.Error -> {
                     binding.categoryProgressBar.visibility = View.GONE
-                    binding.rvCategoryRecipes.visibility = View.VISIBLE
                     Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
                 }
             }
