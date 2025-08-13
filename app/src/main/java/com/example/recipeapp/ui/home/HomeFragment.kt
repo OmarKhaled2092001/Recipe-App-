@@ -16,6 +16,7 @@ import com.example.recipeapp.data.repository.MealRepository
 import com.example.recipeapp.databinding.FragmentHomeBinding
 import com.example.recipeapp.ui.viewmodels.HomeViewModel
 import com.example.recipeapp.ui.viewmodels.ViewModelFactory
+import com.example.recipeapp.util.GridSpacingItemDecoration
 import com.example.recipeapp.util.Resource
 
 class HomeFragment : Fragment() {
@@ -66,8 +67,23 @@ class HomeFragment : Fragment() {
 
     private fun setupRecyclerView() {
         categoryAdapter = CategoryAdapter()
-        binding.rvCategoriesHorizontal.apply {
-            layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+
+        val recyclerView = binding.rvCategoriesHorizontal
+        val screenWidthDp = resources.displayMetrics.widthPixels / resources.displayMetrics.density
+        val desiredColumnWidthDp = 180
+        val spanCount = maxOf(1, (screenWidthDp / desiredColumnWidthDp).toInt())
+
+        val spacingInPixels = (16 * resources.displayMetrics.density).toInt()
+
+        val itemDecoration = GridSpacingItemDecoration(
+            spanCount,
+            spacingInPixels,
+            spacingInPixels
+        )
+        recyclerView.addItemDecoration(itemDecoration)
+
+        recyclerView.apply {
+            layoutManager = GridLayoutManager(context, spanCount, GridLayoutManager.VERTICAL, false)
             adapter = categoryAdapter
         }
     }
