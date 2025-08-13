@@ -11,6 +11,10 @@
     <action
         android:id="@+id/action_homeFragment_to_categoryFragment"
         app:destination="@id/categoryFragment" />
+
+    <action
+        android:id="@+id/action_homeFragment_to_about"
+        app:destination="@id/about" />
 </fragment>
 
     <fragment
@@ -24,6 +28,9 @@
         <action
             android:id="@+id/action_categoryFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
 
     <fragment
@@ -34,6 +41,9 @@
         <action
             android:id="@+id/action_favoriteFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_favoriteFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -43,6 +53,9 @@
         <action
             android:id="@+id/action_searchFragment_to_recipeDetailFragment"
             app:destination="@id/recipeDetailFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_about"
+            app:destination="@id/about" />
     </fragment>
     <fragment
         android:id="@+id/recipeDetailFragment"
@@ -52,6 +65,16 @@
         <argument
             android:name="mealId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/about"
+        android:name="com.example.recipeapp.ui.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" >
+        <argument
+            android:name="About"
+            app:argType="string" />
+
     </fragment>
 
 </navigation>

@@ -53,7 +53,13 @@ class RecipeActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_about -> {
-                navController.navigate(R.id.aboutFragment)
+                val currentDestination = navController.currentDestination?.id
+                when (currentDestination) {
+                    R.id.homeFragment -> navController.navigate(R.id.about)
+                    R.id.searchFragment -> navController.navigate(R.id.about)
+                    R.id.favoriteFragment -> navController.navigate(R.id.about)
+                    R.id.categoryFragment -> navController.navigate(R.id.about)
+                }
                 true
             }
             R.id.action_sign_out -> {
