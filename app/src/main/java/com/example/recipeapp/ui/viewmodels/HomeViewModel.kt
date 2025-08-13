@@ -27,7 +27,11 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
                 val response = repository.getCategories()
                 categories.postValue(Resource.Success(response))
             } catch (e: Exception) {
-                categories.postValue(Resource.Error(e.message ?: "An unknown error occurred"))
+                val errorMessage = when (e) {
+                    is java.net.UnknownHostException, is java.io.IOException -> "NO_INTERNET_CONNECTION"
+                    else -> e.message ?: "An unknown error occurred"
+                }
+                categories.postValue(Resource.Error(errorMessage))
             }
         }
     }
@@ -49,7 +53,11 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
                 }
                 searchedMeals.postValue(Resource.Success(mealsWithStatus))
             } catch (e: Exception) {
-                searchedMeals.postValue(Resource.Error(e.message ?: "An unknown error occurred"))
+                val errorMessage = when (e) {
+                    is java.net.UnknownHostException, is java.io.IOException -> "NO_INTERNET_CONNECTION"
+                    else -> e.message ?: "An unknown error occurred"
+                }
+                searchedMeals.postValue(Resource.Error(errorMessage))
             }
         }
     }
@@ -69,7 +77,11 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
                 }
                 mealsByCategory.postValue(Resource.Success(mealsWithStatus))
             } catch (e: Exception) {
-                mealsByCategory.postValue(Resource.Error(e.message ?: "An unknown error occurred"))
+                val errorMessage = when (e) {
+                    is java.net.UnknownHostException, is java.io.IOException -> "NO_INTERNET_CONNECTION"
+                    else -> e.message ?: "An unknown error occurred"
+                }
+                searchedMeals.postValue(Resource.Error(errorMessage))
             }
         }
     }
