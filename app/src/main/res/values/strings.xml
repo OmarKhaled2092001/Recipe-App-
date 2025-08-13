@@ -30,4 +30,11 @@
     <string name="more">more</string>
     <string name="no_title">NO Title</string>
     <string name="no_instructions">No instructions\n</string>
+    <string name="recipe_app_helps_you_discover_cook_and_enjoy_delicious_meals_from_around_the_world_search_watch_and_save_your_favorite_recipes_in_a_clean_and_friendly_interface_cooking_made_simple_and_fun">Recipe App helps you discover, cook, and enjoy delicious meals from around the world. Search, watch, and save your favorite recipes in a clean and friendly interface. Cooking made simple and fun!</string>
+    <string name="about_the_creators">About the Creators</string>
+    <string name="name">name</string>
+    <string name="email">email</string>
+    <string name="linkedin">linkedin</string>
+    <string name="github">github</string>
+
 </resources>
