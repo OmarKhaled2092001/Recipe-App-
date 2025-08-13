@@ -1,9 +1,9 @@
 package com.example.recipeapp.ui.viewmodels
 
-import RecipeDetailViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.recipeapp.data.repository.MealRepository
+import com.example.recipeapp.ui.recipedetail.RecipeDetailViewModel
 
 class ViewModelFactory(private val repository: MealRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

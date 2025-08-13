@@ -1,6 +1,6 @@
 package com.example.recipeapp.ui.recipedetail
 
-import RecipeDetailViewModel
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,6 +22,7 @@ class RecipeDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var viewModel: RecipeDetailViewModel
+    private var currentMeal: com.example.recipeapp.data.models.Meal? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,17 +39,12 @@ class RecipeDetailFragment : Fragment() {
             RecipeDetailFragmentArgs.fromBundle(it).mealId
         } ?: ""
 
-
         val database = AppDatabase.getInstance(requireContext())
         val repository = MealRepository(database)
-
-
         val factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[RecipeDetailViewModel::class.java]
 
-
         viewModel.fetchMealDetails(mealId)
-
 
         viewModel.mealDetailState.observe(viewLifecycleOwner) { state ->
             when (state) {
@@ -61,6 +57,7 @@ class RecipeDetailFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                     binding.layoutContent.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE
+                    currentMeal = state.meal
                     displayMealDetails(state.meal)
                 }
                 is MealDetailState.Error -> {
@@ -69,13 +66,20 @@ class RecipeDetailFragment : Fragment() {
                     binding.tvError.visibility = View.VISIBLE
                     binding.tvError.text = state.message
                 }
-                else -> {
-
-                }
+                else -> {}
             }
-
         }
 
+        viewModel.isFavorite.observe(viewLifecycleOwner) { isFav ->
+            val color = if (isFav) Color.RED else Color.GRAY
+            binding.favIc.imageTintList = ColorStateList.valueOf(color)
+        }
+
+        binding.favIc.setOnClickListener {
+            currentMeal?.let { meal ->
+                viewModel.toggleFavorite(meal)
+            }
+        }
 
         binding.btnToggleInstructions.setOnClickListener {
             if (binding.tvInstructions.maxLines == 5) {
@@ -95,7 +99,6 @@ class RecipeDetailFragment : Fragment() {
             .into(binding.imageRecipe)
 
         binding.tvInstructions.text = meal.strInstructions ?: "No instructions available"
-
 
         val ingredientsList = mutableListOf<String>()
         for (i in 1..20) {

@@ -37,15 +37,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp" />
 
-        <ImageButton
-            android:id="@+id/btnFavorite"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@android:color/transparent"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="@id/imageRecipe"
-            app:layout_constraintEnd_toEndOf="@id/imageRecipe"
-            app:srcCompat="@drawable/ic_favorite" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fav_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_favorite"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardRecipe"
@@ -116,7 +117,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Ingredients -->
+
         <TextView
             android:id="@+id/tvIngredientsTitle"
             android:layout_width="wrap_content"
@@ -142,11 +143,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Ingredients list will be added dynamically -->
+
 
         </LinearLayout>
 
-        <!-- Instructions -->
+
         <TextView
             android:id="@+id/tvInstructionsTitle"
             android:layout_width="wrap_content"
@@ -190,7 +191,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
-        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="48dp"
@@ -201,7 +201,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
-        <!-- Error Text -->
+
         <TextView
             android:id="@+id/tvError"
             android:layout_width="0dp"
