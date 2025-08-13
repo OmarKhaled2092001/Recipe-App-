@@ -15,6 +15,8 @@ import com.example.recipeapp.data.local.AppDatabase
 import com.example.recipeapp.data.repository.MealRepository
 import com.example.recipeapp.databinding.FragmentRecipeDetailBinding
 import com.example.recipeapp.ui.viewmodels.ViewModelFactory
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
 class RecipeDetailFragment : Fragment() {
 
@@ -43,6 +45,8 @@ class RecipeDetailFragment : Fragment() {
         val repository = MealRepository(database)
         val factory = ViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory)[RecipeDetailViewModel::class.java]
+
+        lifecycle.addObserver(binding.youtubePlayerView)
 
         viewModel.fetchMealDetails(mealId)
 
@@ -76,37 +80,60 @@ class RecipeDetailFragment : Fragment() {
         }
 
         binding.favIc.setOnClickListener {
-            currentMeal?.let { meal ->
-                viewModel.toggleFavorite(meal)
-            }
+            currentMeal?.let { meal -> viewModel.toggleFavorite(meal) }
         }
 
         binding.btnToggleInstructions.setOnClickListener {
             if (binding.tvInstructions.maxLines == 5) {
-                binding.tvInstructions.maxLines = Integer.MAX_VALUE
+                binding.tvInstructions.maxLines = Int.MAX_VALUE
                 binding.btnToggleInstructions.text = getString(R.string.less)
             } else {
                 binding.tvInstructions.maxLines = 5
                 binding.btnToggleInstructions.text = getString(R.string.more)
             }
         }
+
+        binding.btnPlayVideo.setOnClickListener {
+            currentMeal?.strYoutube?.let { youtubeUrl ->
+                val videoId = extractYoutubeId(youtubeUrl)
+                if (videoId != null) {
+
+                    binding.imageRecipe.visibility = View.GONE
+                    binding.youtubePlayerView.visibility = View.VISIBLE
+                    binding.btnPlayVideo.visibility = View.GONE
+
+                    binding.youtubePlayerView.addYouTubePlayerListener(object :
+                        AbstractYouTubePlayerListener() {
+                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                            youTubePlayer.loadVideo(videoId, 0f)
+                        }
+                    })
+                }
+            }
+        }
     }
 
     private fun displayMealDetails(meal: com.example.recipeapp.data.models.Meal) {
-        binding.tvRecipeTitle.text = meal.strMeal ?: "No Title"
+        binding.tvRecipeTitle.text = meal.strMeal ?: getString(R.string.no_title)
         Glide.with(requireContext())
             .load(meal.strMealThumb)
             .into(binding.imageRecipe)
 
-        binding.tvInstructions.text = meal.strInstructions ?: "No instructions available"
+        binding.tvInstructions.text = meal.strInstructions ?: getString(R.string.no_instructions)
 
         val ingredientsList = mutableListOf<String>()
         for (i in 1..20) {
-            val ingredient = meal.javaClass.getDeclaredField("strIngredient$i").apply { isAccessible = true }.get(meal) as? String
-            val measure = meal.javaClass.getDeclaredField("strMeasure$i").apply { isAccessible = true }.get(meal) as? String
+            val ingredient = meal.javaClass.getDeclaredField("strIngredient$i")
+                .apply { isAccessible = true }
+                .get(meal) as? String
+            val measure = meal.javaClass.getDeclaredField("strMeasure$i")
+                .apply { isAccessible = true }
+                .get(meal) as? String
 
             if (!ingredient.isNullOrBlank() && ingredient != "null") {
-                val item = if (!measure.isNullOrBlank() && measure != "null") "$measure $ingredient" else ingredient
+                val item = if (!measure.isNullOrBlank() && measure != "null") {
+                    "$measure $ingredient"
+                } else ingredient
                 ingredientsList.add(item.trim())
             }
         }
@@ -120,6 +147,11 @@ class RecipeDetailFragment : Fragment() {
             }
             binding.layoutIngredients.addView(tv)
         }
+    }
+
+    private fun extractYoutubeId(url: String): String? {
+        val regex = "(?<=watch\\?v=|/videos/|embed/|youtu.be/)[^#\\&\\?]*".toRegex()
+        return regex.find(url)?.value
     }
 
     override fun onDestroyView() {

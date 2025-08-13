@@ -28,4 +28,6 @@
     <string name="sign_out">Sign Out</string>
     <string name="less">less</string>
     <string name="more">more</string>
+    <string name="no_title">NO Title</string>
+    <string name="no_instructions">No instructions\n</string>
 </resources>
