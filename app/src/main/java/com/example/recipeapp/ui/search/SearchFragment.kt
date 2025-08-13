@@ -84,7 +84,11 @@ class SearchFragment : Fragment() {
         val noInternetBinding = binding.noInternetView
 
         noInternetBinding.btnRetry.setOnClickListener {
-            viewModel.getCategories()
+            val currentQuery = binding.etSearchBox.text.toString()
+
+            if (currentQuery.isNotEmpty()) {
+                viewModel.searchMeals(currentQuery)
+            }
         }
 
         noInternetBinding.tvOpenSaved.setOnClickListener {
