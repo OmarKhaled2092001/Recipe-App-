@@ -30,4 +30,8 @@ class MealRepository(private val db: AppDatabase) {
     fun getMealById(id: String): Flow<Meal?> {
         return db.mealDao().getMealById(id)
     }
+//IS it fav?
+    fun isMealFavorite(mealId: String): Flow<Boolean> {
+        return db.mealDao().isMealFavorite(mealId)
+    }
 }

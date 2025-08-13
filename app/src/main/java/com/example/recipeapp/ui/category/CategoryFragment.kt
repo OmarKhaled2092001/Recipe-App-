@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.recipeapp.adapters.RecipeAdapter
 import com.example.recipeapp.data.local.AppDatabase
+import com.example.recipeapp.data.models.Meal
 import com.example.recipeapp.data.repository.MealRepository
 import com.example.recipeapp.databinding.FragmentCategoryBinding
 import com.example.recipeapp.ui.viewmodels.HomeViewModel
@@ -41,7 +42,7 @@ class CategoryFragment : Fragment() {
         val database = AppDatabase.getInstance(requireContext())
         val repository = MealRepository(database)
         val factory = ViewModelFactory(repository)
-        homeViewModel = ViewModelProvider(this, factory).get(HomeViewModel::class.java)
+        homeViewModel = ViewModelProvider(this, factory)[HomeViewModel::class.java]
 
         return binding.root
     }
@@ -62,6 +63,18 @@ class CategoryFragment : Fragment() {
             val action = CategoryFragmentDirections.actionCategoryFragmentToRecipeDetailFragment(mealId)
             findNavController().navigate(action)
         }
+
+        recipeAdapter.setOnAddFavoriteClickListener { meal ->
+            homeViewModel.upsertMeal(meal)
+            updateFavoriteStatus(meal.idMeal, true)
+            Toast.makeText(requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
+        }
+
+        recipeAdapter.setOnDeleteFavoriteClickListener { meal ->
+            homeViewModel.deleteMeal(meal)
+            updateFavoriteStatus(meal.idMeal, false)
+            Toast.makeText(requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -74,7 +87,7 @@ class CategoryFragment : Fragment() {
 
     private fun observeMeals() {
         homeViewModel.mealsByCategory.observe(viewLifecycleOwner) { resource ->
-            when(resource) {
+            when (resource) {
                 is Resource.Loading -> binding.categoryProgressBar.visibility = View.VISIBLE
                 is Resource.Success -> {
                     binding.categoryProgressBar.visibility = View.GONE
@@ -85,6 +98,15 @@ class CategoryFragment : Fragment() {
                     Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
                 }
             }
+        }
+    }
+
+    private fun updateFavoriteStatus(mealId: String, isFavorite: Boolean) {
+        val currentList = recipeAdapter.differ.currentList.toMutableList()
+        val index = currentList.indexOfFirst { it.meal.idMeal == mealId }
+        if (index != -1) {
+            currentList[index] = currentList[index].copy(isFavorite = isFavorite)
+            recipeAdapter.differ.submitList(currentList)
         }
     }
 

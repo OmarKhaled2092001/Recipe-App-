@@ -21,4 +21,8 @@ interface MealDao {
 
     @Query("SELECT * FROM favorite_meals WHERE idMeal = :id LIMIT 1")
     fun getMealById(id: String): Flow<Meal?>
+
+    //Is it fav?
+    @Query("SELECT EXISTS(SELECT 1 FROM favorite_meals WHERE idMeal = :mealId)")
+    fun isMealFavorite(mealId: String): Flow<Boolean>
 }
