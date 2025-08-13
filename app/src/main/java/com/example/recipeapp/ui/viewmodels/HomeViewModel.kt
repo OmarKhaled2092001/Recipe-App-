@@ -81,7 +81,7 @@ class HomeViewModel(private val repository: MealRepository) : ViewModel() {
                     is java.net.UnknownHostException, is java.io.IOException -> "NO_INTERNET_CONNECTION"
                     else -> e.message ?: "An unknown error occurred"
                 }
-                searchedMeals.postValue(Resource.Error(errorMessage))
+                mealsByCategory.postValue(Resource.Error(errorMessage))
             }
         }
     }
