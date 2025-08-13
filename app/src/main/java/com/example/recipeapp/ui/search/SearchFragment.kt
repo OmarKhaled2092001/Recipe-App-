@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.recipeapp.R
 import com.example.recipeapp.adapters.RecipeAdapter
 import com.example.recipeapp.data.local.AppDatabase
 import com.example.recipeapp.data.repository.MealRepository
@@ -79,6 +80,16 @@ class SearchFragment : Fragment() {
             viewModel.deleteMeal(meal)
             Toast.makeText(context, "${meal.strMeal} removed", Toast.LENGTH_SHORT).show()
         }
+
+        val noInternetBinding = binding.noInternetView
+
+        noInternetBinding.btnRetry.setOnClickListener {
+            viewModel.getCategories()
+        }
+
+        noInternetBinding.tvOpenSaved.setOnClickListener {
+            findNavController().navigate(R.id.favoriteFragment)
+        }
     }
 
 
@@ -95,16 +106,22 @@ class SearchFragment : Fragment() {
             when (resource) {
                 is Resource.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
+                    binding.noInternetView.root.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     binding.progressBar.visibility = View.GONE
+                    binding.noInternetView.root.visibility = View.GONE
                     resource.data?.let { mealsWithStatusList ->
                         searchAdapter.differ.submitList(mealsWithStatusList)
                     }
                 }
                 is Resource.Error -> {
                     binding.progressBar.visibility = View.GONE
-                    Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    if (resource.message == "NO_INTERNET_CONNECTION") {
+                        binding.noInternetView.root.visibility = View.VISIBLE
+                    } else {
+                        Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

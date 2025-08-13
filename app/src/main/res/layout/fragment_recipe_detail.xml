@@ -14,39 +14,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imageRecipe"
+
+        <FrameLayout
+            android:id="@+id/mediaContainer"
             android:layout_width="0dp"
             android:layout_height="300dp"
-            android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+
+            <ImageView
+                android:id="@+id/imageRecipe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/image_food" />
+
+            <!-- YouTube Player View -->
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtubePlayerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
+            <!-- Play Video Button -->
+            <ImageButton
+                android:id="@+id/btnPlayVideo"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_play_circle"
+                app:tint="@android:color/white"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!-- Favourite Button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fav_ic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/ic_favorite"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:src="@drawable/image_food" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btnPlayVideo"
-            android:layout_width="64dp"
-            android:layout_height="100dp"
-            android:background="@android:color/transparent"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_play_circle"
-            app:tint="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="@id/imageRecipe"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp" />
-
-        <ImageButton
-            android:id="@+id/btnFavorite"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@android:color/transparent"
-            android:padding="8dp"
-            app:layout_constraintTop_toTopOf="@id/imageRecipe"
-            app:layout_constraintEnd_toEndOf="@id/imageRecipe"
-            app:srcCompat="@drawable/ic_favorite" />
-
+        <!-- Recipe Card -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardRecipe"
             android:layout_width="0dp"
@@ -56,7 +72,7 @@
             android:layout_marginTop="-40dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="6dp"
-            app:layout_constraintTop_toBottomOf="@id/imageRecipe"
+            app:layout_constraintTop_toBottomOf="@id/mediaContainer"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -116,7 +132,7 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Ingredients -->
+
         <TextView
             android:id="@+id/tvIngredientsTitle"
             android:layout_width="wrap_content"
@@ -130,6 +146,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp" />
 
+
         <LinearLayout
             android:id="@+id/layoutIngredients"
             android:layout_width="0dp"
@@ -140,13 +157,9 @@
             android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/tvIngredientsTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent" />
 
-            <!-- Ingredients list will be added dynamically -->
 
-        </LinearLayout>
-
-        <!-- Instructions -->
         <TextView
             android:id="@+id/tvInstructionsTitle"
             android:layout_width="wrap_content"
@@ -177,6 +190,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="• Wash the lettuce thoroughly.\n• Slice the grilled cheese into small cubes.\n• Cut the cherry tomatoes in halves.\n• Mix all ingredients in a large bowl.\n• Add dressing and serve fresh." />
 
+
         <TextView
             android:id="@+id/btnToggleInstructions"
             android:layout_width="wrap_content"
@@ -190,7 +204,6 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
-        <!-- ProgressBar -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="48dp"
@@ -201,7 +214,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="16dp" />
 
-        <!-- Error Text -->
+
         <TextView
             android:id="@+id/tvError"
             android:layout_width="0dp"

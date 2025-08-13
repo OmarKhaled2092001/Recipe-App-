@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/no_internet_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <!-- Card container -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="6dp"
+        app:cardUseCompatPadding="true"
+        app:cardBackgroundColor="#EFE6E6"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="28dp"
+            android:gravity="center_horizontal">
+
+            <!-- Illustration -->
+            <ImageView
+                android:id="@+id/img_no_internet"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:src="@drawable/no_internet"
+                android:contentDescription="No internet illustration"
+                android:scaleType="centerInside" />
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No Internet Connection"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="18dp"
+                android:textColor="#333333"/>
+
+            <!-- Short message -->
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please check your connection and try again. You can still view saved recipes offline."
+                android:textSize="14sp"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:textColor="#555555"/>
+
+            <!-- Retry button -->
+            <Button
+                android:id="@+id/btn_retry"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="18dp"
+                android:text="Retry"
+                android:textAllCaps="false"
+                android:backgroundTint="#f67669"
+                android:textColor="#FFFFFF"
+                android:stateListAnimator="@null"
+                android:layout_marginBottom="4dp"/>
+
+            <!-- Open saved -->
+            <TextView
+                android:id="@+id/tv_open_saved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Open saved recipes"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:textColor="#f67669"
+                android:clickable="true"
+                android:focusable="true"/>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <!-- Small footer, optional -->
+    <TextView
+        android:id="@+id/tv_footer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Recipe App • Enjoy cooking ♥"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:textColor="#999999"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

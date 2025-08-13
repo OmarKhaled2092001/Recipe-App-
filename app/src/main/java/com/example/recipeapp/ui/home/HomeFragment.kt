@@ -52,6 +52,16 @@ class HomeFragment : Fragment() {
             val action = HomeFragmentDirections.actionHomeFragmentToCategoryFragment(category.strCategory)
             findNavController().navigate(action)
         }
+
+        val noInternetBinding = binding.noInternetView
+
+        noInternetBinding.btnRetry.setOnClickListener {
+            homeViewModel.getCategories()
+        }
+
+        noInternetBinding.tvOpenSaved.setOnClickListener {
+            findNavController().navigate(R.id.favoriteFragment)
+        }
     }
 
     private fun setupRecyclerView() {
@@ -67,16 +77,22 @@ class HomeFragment : Fragment() {
             when (resource) {
                 is Resource.Loading -> {
                     binding.homeProgressBar.visibility = View.VISIBLE
+                    binding.noInternetView.root.visibility = View.GONE
                 }
                 is Resource.Success -> {
                     binding.homeProgressBar.visibility = View.GONE
+                    binding.noInternetView.root.visibility = View.GONE
                     resource.data?.let { response ->
                         categoryAdapter.differ.submitList(response.categories)
                     }
                 }
                 is Resource.Error -> {
                     binding.homeProgressBar.visibility = View.GONE
-                    Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    if (resource.message == "NO_INTERNET_CONNECTION") {
+                        binding.noInternetView.root.visibility = View.VISIBLE
+                    } else {
+                        Toast.makeText(context, resource.message, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

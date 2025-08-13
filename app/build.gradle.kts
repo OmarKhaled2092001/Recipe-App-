@@ -93,4 +93,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx.v292)
     kapt(libs.androidx.lifecycle.compiler)
 
+    //for video
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+
 }

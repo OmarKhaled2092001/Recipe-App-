@@ -1,5 +1,6 @@
 package com.example.recipeapp.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +14,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.example.recipeapp.R
 import com.example.recipeapp.databinding.ActivityRecipeBinding
+import com.example.recipeapp.ui.auth.AuthActivity
+import com.example.recipeapp.util.SessionManager
 
 class RecipeActivity : AppCompatActivity() {
 
@@ -63,6 +66,7 @@ class RecipeActivity : AppCompatActivity() {
                 true
             }
             R.id.action_sign_out -> {
+                signOut()
 
                 true
             }
@@ -74,5 +78,13 @@ class RecipeActivity : AppCompatActivity() {
         return NavigationUI.navigateUp(navController, null)
     }
 
+    private fun signOut() {
+        SessionManager.setLoggedIn(this, false)
 
+        val intent = Intent(this, AuthActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
+    }
 }
