@@ -1,6 +1,6 @@
 package com.example.recipeapp.ui
 
-import CreatorsAdapter
+import com.example.recipeapp.adapters.CreatorsAdapter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.model.Creator
+import com.example.recipeapp.data.models.Creator
 
 class AboutFragment : Fragment() {
 

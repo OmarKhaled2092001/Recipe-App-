@@ -1,23 +1,21 @@
+package com.example.recipeapp.adapters
+
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-//import androidx.activity.R
-import androidx.recyclerview.widget.RecyclerView
-
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.RecyclerView
 import com.example.recipeapp.R
-import com.example.recipeapp.model.Creator
-
+import com.example.recipeapp.data.models.Creator
 
 class CreatorsAdapter(private val creators: List<Creator>) :
     RecyclerView.Adapter<CreatorsAdapter.CreatorViewHolder>() {
 
     class CreatorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val name = itemView.findViewById< TextView>(R.id.Name)
+        val name = itemView.findViewById<TextView>(R.id.Name)
         val email = itemView.findViewById<TextView>(R.id.Email)
         val github = itemView.findViewById<TextView>(R.id.GitHub)
         val linkedin = itemView.findViewById<TextView>(R.id.LinkedIn)
